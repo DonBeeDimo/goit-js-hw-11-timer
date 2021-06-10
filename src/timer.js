@@ -1,15 +1,5 @@
-import './sass/main.scss';
-
-const refs = {
-    days: document.querySelector('[data-value="days"]'),
-    hours: document.querySelector('[data-value="hours"]'),
-    mins: document.querySelector('[data-value="mins"]'),
-    secs: document.querySelector('[data-value="secs"]'),
-    startBtn: document.querySelector('[data-action="start"]'),
-    stopBtn: document.querySelector('[data-action="stop"]'),
-    calendar: document.querySelector('.calendar')
-}
-
+import refs from './refs';
+export default 
 class CountdownTimer {
     constructor({selector, targetDate}) {
         this.selector = selector;
@@ -63,11 +53,3 @@ class CountdownTimer {
         return refs.calendar.value;
     }
 }
-
-const timer = new CountdownTimer({
-    selector: '#timer-1',
-    targetDate: new Date('Jul 17, 2019'),
-  });
-
-refs.startBtn.addEventListener('click', timer.start.bind(timer));
-refs.stopBtn.addEventListener('click', timer.stop.bind(timer));
