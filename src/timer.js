@@ -1,11 +1,18 @@
-import refs from './refs';
-export default 
+import './sass/main.scss';
+
 class CountdownTimer {
     constructor({selector, targetDate}) {
         this.selector = selector;
         this.targetDate = targetDate;
         this.intervalId = null;
-        this.isActive = false;   
+        this.isActive = false;
+        this.refs = {
+            days: document.querySelector(`${this.selector} [data-value="days"]`),
+            hours: document.querySelector(`${this.selector} [data-value="hours"]`),
+            mins: document.querySelector(`${this.selector} [data-value="mins"]`),
+            secs: document.querySelector(`${this.selector} [data-value="secs"]`),
+            calendar: document.querySelector('.calendar'),
+        }     
     }
 
     start() {
@@ -39,10 +46,10 @@ class CountdownTimer {
         const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
         const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
 
-        refs.days.textContent = days;
-        refs.hours.textContent = hours;
-        refs.mins.textContent = mins;
-        refs.secs.textContent = secs;  
+        this.refs.days.textContent = days;
+        this.refs.hours.textContent = hours;
+        this.refs.mins.textContent = mins;
+        this.refs.secs.textContent = secs;  
       };
 
     pad(value) {
@@ -50,6 +57,18 @@ class CountdownTimer {
     }
 
     getValueCalendar() {
-        return refs.calendar.value;
+        return this.refs.calendar.value;
     }
+
 }
+
+const timer = new CountdownTimer({
+    selector: '#timer-1',
+    targetDate: new Date('Jul 17, 2019'),
+  });
+
+  const startBtn = document.querySelector('[data-action="start"]');
+  startBtn.addEventListener('click', timer.start.bind(timer));
+
+  const stopBtn = document.querySelector('[data-action="stop"]');
+  stopBtn.addEventListener('click', timer.stop.bind(timer));
